@@ -1,0 +1,23 @@
+services:
+  baruc-db:
+    image: postgres:16
+    container_name: baruc-db
+    command: -c listen_addresses='*'
+    environment:
+      POSTGRES_USER: baruc
+      POSTGRES_PASSWORD: baruc
+      POSTGRES_DB: baruc
+    ports:
+      - "5436:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - baruc
+    restart: unless-stopped
+
+networks:
+  baruc:
+    driver: bridge
+
+volumes:
+  postgres_data:
