@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import publisherRouter from '../publisher/publisher.route';
+import publisherRouter from '../features/publisher/publisher.route';
 
 const v1Router = Router();
 const router = Router();
