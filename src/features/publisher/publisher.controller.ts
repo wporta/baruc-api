@@ -34,15 +34,11 @@ export const getById = async (req: Request, res: Response) => {
   } else {
     res.status(404).json({ message: 'Id is required' });
   }
-
-  console.log(publisherId);
 };
 
 export const create = async (req: Request, res: Response) => {
   const publisherData = req.body;
-
   const created = await createPublisher(publisherData);
-
   res.status(201).json(created);
 };
 
