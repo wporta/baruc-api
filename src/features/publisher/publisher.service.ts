@@ -25,3 +25,26 @@ export const createPublisher = async (publisher: Publisher) => {
 
   return created;
 };
+
+export const updatePublisher = async (
+  publisherId: number,
+  publisherData: Publisher
+) => {
+  const updated = await prisma.publisher.update({
+    data: publisherData,
+    where: {
+      id: publisherId,
+    },
+  });
+
+  return updated;
+};
+
+export const deletePublisher = async (publisherId: number) => {
+  const deleted = await prisma.publisher.delete({
+    where: {
+      id: publisherId,
+    },
+  });
+  return deleted;
+};

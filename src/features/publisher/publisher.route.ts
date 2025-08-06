@@ -1,6 +1,12 @@
 import { Router } from 'express';
 
-import { getAll, getById, create } from './publisher.controller';
+import {
+  getAll,
+  getById,
+  create,
+  update,
+  deletePub,
+} from './publisher.controller';
 
 const router = Router();
 
@@ -12,5 +18,11 @@ router.get('/:id', getById);
 
 // Create
 router.post('/', create);
+
+// Update
+router.put('/:id', update);
+
+// Delete
+router.delete('/:id', deletePub);
 
 export default router;

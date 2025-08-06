@@ -4,6 +4,8 @@ import {
   getPublishers,
   getPublisherById,
   createPublisher,
+  updatePublisher,
+  deletePublisher,
 } from './publisher.service';
 
 export const getAll = async (req: Request, res: Response) => {
@@ -42,4 +44,16 @@ export const create = async (req: Request, res: Response) => {
   const created = await createPublisher(publisherData);
 
   res.status(201).json(created);
+};
+
+export const update = async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
+  const updated = await updatePublisher(id, req.body);
+  res.status(200).json(updated);
+};
+
+export const deletePub = async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
+  const deleted = await deletePublisher(id);
+  res.status(200).json(deleted);
 };
