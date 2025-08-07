@@ -1,7 +1,4 @@
-export type Publisher = {
-  id: number;
-  firstName: string;
-  lastName: string;
-  birthday?: Date | undefined;
-  baptismDate?: Date | undefined;
-};
+import z from 'zod';
+import { PublisherSchema } from './publisher.schema';
+
+export type Publisher = z.infer<typeof PublisherSchema>;

@@ -5,8 +5,6 @@ const prisma = new PrismaClient();
 
 export const getPublishers = async () => {
   const result = await prisma.publisher.findMany();
-  console.log(result);
-
   return result;
 };
 
@@ -46,5 +44,6 @@ export const deletePublisher = async (publisherId: number) => {
       id: publisherId,
     },
   });
+
   return deleted;
 };
