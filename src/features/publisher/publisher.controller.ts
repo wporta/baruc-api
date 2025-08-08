@@ -19,7 +19,7 @@ export const getAllPublishersController = async (
   if (publishers) {
     return res.status(200).json(publishers);
   } else {
-    return res.status(404).end('Publishers not found');
+    return res.status(404).end('Publicadores no encontrados.');
   }
 };
 
@@ -32,15 +32,15 @@ export const getPublisherByIdController = async (
   if (publisherId) {
     const publisher = await getPublisherById(publisherId);
 
-    if (publisher) {
-      return res.status(200).json(publisher);
-    } else {
-      return res
-        .status(404)
-        .json({ message: `Publisher with id: ${publisherId} not found.` });
+    if (!publisher) {
+      return res.status(404).json({
+        message: `Publicador con el ID: ${publisherId} no encontrado.`,
+      });
     }
+
+    return res.status(200).json(publisher);
   } else {
-    return res.status(404).json({ message: 'Id is required' });
+    return res.status(404).json({ message: 'El Id es requerido' });
   }
 };
 
