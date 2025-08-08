@@ -7,49 +7,77 @@ import {
   updatePublisher,
   deletePublisher,
 } from './publisher.service';
+import { PublisherSchema } from './publisher.schema';
+import z from 'zod';
 
-export const getAll = async (req: Request, res: Response) => {
+export const getAllPublishersController = async (
+  req: Request,
+  res: Response
+) => {
   const publishers = await getPublishers();
 
   if (publishers) {
-    res.status(200).json(publishers);
+    return res.status(200).json(publishers);
   } else {
-    res.status(404).end('Publishers not found');
+    return res.status(404).end('Publishers not found');
   }
 };
 
-export const getById = async (req: Request, res: Response) => {
+export const getPublisherByIdController = async (
+  req: Request,
+  res: Response
+) => {
   const publisherId = Number.parseInt(req.params.id);
 
   if (publisherId) {
     const publisher = await getPublisherById(publisherId);
 
     if (publisher) {
-      res.status(200).json(publisher);
+      return res.status(200).json(publisher);
     } else {
-      res
+      return res
         .status(404)
         .json({ message: `Publisher with id: ${publisherId} not found.` });
     }
   } else {
-    res.status(404).json({ message: 'Id is required' });
+    return res.status(404).json({ message: 'Id is required' });
   }
 };
 
-export const create = async (req: Request, res: Response) => {
-  const publisherData = req.body;
-  const created = await createPublisher(publisherData);
-  res.status(201).json(created);
+export const createPublisherController = async (
+  req: Request,
+  res: Response
+) => {
+  const publisherData = PublisherSchema.safeParse(req.body);
+
+  if (!publisherData.success) {
+    return res.status(400).json(z.treeifyError(publisherData.error));
+  }
+
+  const created = await createPublisher(publisherData.data);
+  return res.status(201).json(created);
 };
 
-export const update = async (req: Request, res: Response) => {
+export const updatePublisherController = async (
+  req: Request,
+  res: Response
+) => {
   const id = parseInt(req.params.id);
-  const updated = await updatePublisher(id, req.body);
-  res.status(200).json(updated);
+  const publisherData = PublisherSchema.safeParse(req.body);
+
+  if (!publisherData.success) {
+    return res.status(400).json(z.treeifyError(publisherData.error));
+  }
+
+  const updated = await updatePublisher(id, publisherData.data);
+  return res.status(200).json(updated);
 };
 
-export const deletePub = async (req: Request, res: Response) => {
+export const deletePublisherController = async (
+  req: Request,
+  res: Response
+) => {
   const id = parseInt(req.params.id);
   const deleted = await deletePublisher(id);
-  res.status(200).json(deleted);
+  return res.status(200).json(deleted);
 };
