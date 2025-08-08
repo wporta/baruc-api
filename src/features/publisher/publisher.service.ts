@@ -16,9 +16,9 @@ export const getPublisherById = async (publisherId: number) => {
   return publisher;
 };
 
-export const createPublisher = async (publisher: Publisher) => {
+export const createPublisher = async (data: Publisher) => {
   const created = await prisma.publisher.create({
-    data: publisher,
+    data,
   });
 
   return created;
