@@ -1,10 +1,15 @@
 import { group } from 'console';
-import z from 'zod';
+import z, { number } from 'zod';
 
-export const PublisherSchema = z.object({
+export const createPublisherSchema = z.object({
   firstName: z.string().min(5, 'El nombre es requerido.'),
   lastName: z.string().min(5, 'El apellido es requerido.'),
-  birthday: z.date().optional(),
-  baptismDate: z.date().optional(),
-  groupId: z.number().optional(),
+  birthday: z.date().nullish(),
+  baptismDate: z.date().nullish(),
+  groupId: z.number().nullish(),
+});
+
+export const PublisherSchema = z.object({
+  id: number(),
+  ...createPublisherSchema.shape,
 });
